@@ -1,0 +1,6 @@
+@CroundFundingProject_HostAddress = http://localhost:5228
+
+GET {{CroundFundingProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
