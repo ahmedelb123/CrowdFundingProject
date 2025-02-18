@@ -4,11 +4,9 @@ using System.Threading.Tasks;
 
 [Route("api/user")]
 [ApiController]
-public class UserController : ControllerBase // This should inherit from ControllerBase
+public class UserController : ControllerBase 
 {
   private readonly AppDbContext _context;
-
-  // Make sure UserHandler is injected
   private readonly UserHandler _userService;
 
   public UserController(AppDbContext context, UserHandler userService)
