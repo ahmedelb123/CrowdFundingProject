@@ -103,3 +103,32 @@ button:hover {
 .login-link a:hover {
     text-decoration: underline;
 }
+
+input {
+    border: 1px solid #ccc;
+    transition: border-color 0.5s ease-in-out;
+}
+
+input.error {
+    border: 2px solid red;
+}
+
+#nameErrorMessage {
+    color: red;
+    text-align: left;
+}
+
+#surnameErrorMessage {
+    color: red;
+    text-align: left;
+}
+
+#emailErrorMessage {
+    color: red;
+    text-align: left;
+}
+
+#passwordErrorMessage {
+    color: red;
+    text-align: left;
+}
