@@ -24,7 +24,7 @@ public class CommentHandler
     // Create Comment
 
     Comment newComment = new Comment(postId, userId, commentText);
-    _dbContext.Comments.Add(newComment);
+    _dbContext.comments.Add(newComment);
     await _dbContext.SaveChangesAsync();
     return new ResponseDto { status = true, message = COMMENT_CREATED };
 
@@ -40,7 +40,7 @@ public class CommentHandler
       throw new KeyNotFoundException($"Post with ID {postId} not found.");
     }
 
-    return await _dbContext.Comments.Where(c => c.postId == postId).ToListAsync();
+    return await _dbContext.comments.Where(c => c.postId == postId).ToListAsync();
   }
 
 

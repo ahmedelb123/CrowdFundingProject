@@ -8,7 +8,7 @@ public class AppDbContext : DbContext
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    // Define DbSets for your tables
+    public DbSet<Comment> comments;
     public DbSet<User> Users { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Donation> Donations { get; set; }
