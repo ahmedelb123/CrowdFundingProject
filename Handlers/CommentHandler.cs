@@ -21,10 +21,16 @@ public class CommentHandler
     {
       return new ResponseDto { status = false, message = USER_DONT_EXIST };
     }
+    bool postExists = await _dbContext.Posts.AnyAsync(p => p.Id == postId);
+    if (!postExists)
+    {
+      return new ResponseDto { status = false, message = "Post does not exist" };
+    }
+
     // Create Comment
 
     Comment newComment = new Comment(postId, userId, commentText);
-    _dbContext.comments.Add(newComment);
+    _dbContext.Comments.Add(newComment);
     await _dbContext.SaveChangesAsync();
     return new ResponseDto { status = true, message = COMMENT_CREATED };
 
@@ -40,7 +46,7 @@ public class CommentHandler
       throw new KeyNotFoundException($"Post with ID {postId} not found.");
     }
 
-    return await _dbContext.comments.Where(c => c.postId == postId).ToListAsync();
+    return await _dbContext.Comments.Where(c => c.postId == postId).ToListAsync();
   }
 
 
