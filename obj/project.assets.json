@@ -2009,19 +2009,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/qais/.nuget/packages/": {}
+    "/Users/arashahangar/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/qais/Desktop/Middlesex University/CST2550 - SE Management/Group Coursework - Fundify/CrowdFundingProject/CroundFundingProject.csproj",
+      "projectUniqueName": "/Users/arashahangar/Desktop/Fundify/WayneFrontend/CrowdFundingProject/CroundFundingProject.csproj",
       "projectName": "CroundFundingProject",
-      "projectPath": "/Users/qais/Desktop/Middlesex University/CST2550 - SE Management/Group Coursework - Fundify/CrowdFundingProject/CroundFundingProject.csproj",
-      "packagesPath": "/Users/qais/.nuget/packages/",
-      "outputPath": "/Users/qais/Desktop/Middlesex University/CST2550 - SE Management/Group Coursework - Fundify/CrowdFundingProject/obj/",
+      "projectPath": "/Users/arashahangar/Desktop/Fundify/WayneFrontend/CrowdFundingProject/CroundFundingProject.csproj",
+      "packagesPath": "/Users/arashahangar/.nuget/packages/",
+      "outputPath": "/Users/arashahangar/Desktop/Fundify/WayneFrontend/CrowdFundingProject/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/qais/.nuget/NuGet/NuGet.Config"
+        "/Users/arashahangar/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -2075,6 +2075,20 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.13, 8.0.13]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.osx-arm64",
+            "version": "[8.0.13, 8.0.13]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.13, 8.0.13]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
