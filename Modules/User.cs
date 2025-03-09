@@ -7,7 +7,7 @@ public class User
   public string surname { get; set; }
   public string email { get; set; }
   public string password_hash { get; set; }
-  public DateTime created_at { get; set; }
+  public DateTime createdAt { get; set; } = DateTime.UtcNow;
 
 
 

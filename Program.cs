@@ -1,11 +1,13 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;  // Necessary for EF Core methods
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;  // Necessary for Pomelo MySQL extension
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Mvc;  // Necessary for Pomelo MySQL extension
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add CORS policy
-builder.Services.AddScoped<UserHandler>(); 
+builder.Services.AddScoped<UserHandler>();
+builder.Services.AddScoped<CommentHandler>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -26,7 +28,7 @@ builder.Services.AddSwaggerGen(c =>
 
 // Add MySQL Database Connection
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                      ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")))
 );
 
