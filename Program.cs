@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add CORS policy
 builder.Services.AddScoped<UserHandler>();
+builder.Services.AddScoped<PostHandler>();
 builder.Services.AddScoped<CommentHandler>();
 builder.Services.AddCors(options =>
 {

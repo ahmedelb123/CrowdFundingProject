@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CroundFundingProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+688a7c629433f8b469c5c943e97e578a7a09be9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3dd6814df741aaf4f42cd564eb4eea94af7680d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CroundFundingProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CroundFundingProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
