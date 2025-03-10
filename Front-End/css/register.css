@@ -9,20 +9,32 @@ body {
 
 .header {
     width: 100%;
-    text-align: center;
-    background-color: #007bff;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     padding: 20px;
     font-size: 24px;
     font-weight: 700;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.header img {
+    height: 55px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .register-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: 85vh;
     width: 100%;
 }
 
@@ -37,6 +49,7 @@ body {
 
 h1 {
     font-size: 28px;
+    color: #333333;
     margin-bottom: 10px;
 }
 
@@ -60,6 +73,13 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
+    outline: none;
+}
+
+input:focus {
+    border-color: #6444D8;
+    box-shadow: 0 0 5px rgba(100, 68, 216, 0.5);
 }
 
 .password-requirements {
@@ -76,7 +96,7 @@ input {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #8a5cf6;
     color: white;
     border: none;
     border-radius: 5px;
@@ -87,20 +107,21 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #6444D8;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.login-link {
+.login-link-page {
     margin-top: 15px;
     font-size: 14px;
 }
 
-.login-link a {
+.login-link-page a {
     color: #007bff;
     text-decoration: none;
 }
 
-.login-link a:hover {
+.login-link-page a:hover {
     text-decoration: underline;
 }
 

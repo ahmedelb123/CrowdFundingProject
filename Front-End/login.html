@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="register.css">
+  <link rel="stylesheet" href="css/login.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -12,28 +12,23 @@
 </head>
 <body>
   <header class="header">
-    <h1>FunDify</h1>
+    <img src="assets/images/logo.svg" alt="Fundify" />
   </header>
 
-    <div class="register-container">
-      <div class="register-box">
+    <div class="login-container">
+      <div class="login-box">
         <h1>Login</h1>
         <form>
           <label>Email</label>
-          <input type="text" placeholder="Enter Email" name="email" required />
+          <input type="text" placeholder="Enter Email" name="email" autocomplete="off" required />
+          
           <label>Password</label>
-          <input
-            type="password"
-            placeholder="Enter Password"
-            name="psw"
-            required
-          />
+          <input type="password" placeholder="Enter Password" name="psw" autocomplete="off" required/>
+
           <button type="submit">Login</button>
         </form>
 
-        <p class="login-link-page">
-          First Time Here? <a href="register.html">Create Account</a>
-        </p>
+        <p class="register-link-page">First Time Here? <a href="register.html">Create Account</a></p>
       </div>
     </div>
   </body>
