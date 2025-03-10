@@ -11,8 +11,6 @@ public class Post
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-    public Post() { }
-
     public Post(int userId, string title, string content, string mediaUrl, int amountGained)
     {
         this.UserId = userId;
