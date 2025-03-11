@@ -1,9 +1,11 @@
-
-
 public class ResponseDto
 {
-    public required bool status { get; set; }
-    public required string message { get; set; }
+    public required bool Status { get; set; }    
+    public required string Message { get; set; }  
 
-    public int? id {get; set;} // Here we rturn the user id when he logs in 
+    public int? Id { get; set; }   
+    public string? Token { get; set; }  
+
+    public int? PostId { get; set; }  
+    public PostDto? PostDetails { get; set; }  
 }
