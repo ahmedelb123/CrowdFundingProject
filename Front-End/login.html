@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="register.js" defer></script>
+  <script src="JS/login.js" defer></script>
   <title>Login - FunDify</title>
 </head>
 <body>
@@ -21,9 +21,11 @@
         <form>
           <label>Email</label>
           <input type="text" placeholder="Enter Email" name="email" autocomplete="off" required />
+          <p id="emailErrorMessage"></p>
           
           <label>Password</label>
           <input type="password" placeholder="Enter Password" name="psw" autocomplete="off" required/>
+          <p id="passwordErrorMessage"></p>
 
           <button type="submit">Login</button>
         </form>
