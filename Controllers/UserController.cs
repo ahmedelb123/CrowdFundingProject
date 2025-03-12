@@ -31,7 +31,7 @@ public async Task<IActionResult> CreateUser([FromBody] UserRegisterDto request)
     return Ok(new 
         { 
             message = result.Message,
-            status=result.Status,
+            status = result.Status,
         });
     }
     catch (Exception ex)

@@ -76,6 +76,7 @@ public async Task<ResponseDto> CreateUser(string name, string surname, string em
         {
             new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
             new Claim(ClaimTypes.Email, user.email),
+            new Claim("IsAdmin", user.isAdmin.ToString())
         };
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
