@@ -13,83 +13,151 @@ public class PostHandler
     }
 
     // Create a Post
-    public async Task<ResponseDto> CreatePost(CreatePostDto postDto)
+    public async Task<ResponseDto> CreatePost(CreatePostDto postDto, int userId)
     {
-        var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0);
+        try
+        {
         
-        _dbContext.Posts.Add(newPost);
-        await _dbContext.SaveChangesAsync();
+            var newPost = new Post(userId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0);
 
-        return new ResponseDto { status = true, message = "Post created successfully!" };
+            _dbContext.Posts.Add(newPost);
+            await _dbContext.SaveChangesAsync();
+
+            var postDetails = new PostDto
+            {
+                Id = newPost.Id,
+                UserId = newPost.UserId,
+                Title = newPost.Title,
+                Content = newPost.Content,
+                MediaUrl = newPost.MediaUrl,
+                AmountGained = newPost.AmountGained,
+                CreatedAt = newPost.CreatedAt,
+                UpdatedAt = newPost.UpdatedAt
+            };
+
+            return new ResponseDto 
+            { 
+                Status = true, 
+                Message = "Post created successfully!",
+                PostId = newPost.Id,  
+                PostDetails = postDetails 
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDto { Status = false, Message = "An error occurred while creating the post." };
+        }
     }
 
     // Get a Single Post by ID
     public async Task<PostDto?> GetPostById(int postId)
     {
-        var post = await _dbContext.Posts.FindAsync(postId);
-        if (post == null) return null;
-
-        return new PostDto
+        try
         {
-            Id = post.Id,
-            UserId = post.UserId,
-            Title = post.Title,
-            Content = post.Content,
-            MediaUrl = post.MediaUrl, 
-            AmountGained = post.AmountGained,
-            CreatedAt = post.CreatedAt,
-            UpdatedAt = post.UpdatedAt
-        };
+            var post = await _dbContext.Posts.FindAsync(postId);
+            if (post == null) return null;
+
+            return new PostDto
+            {
+                Id = post.Id,
+                UserId = post.UserId,
+                Title = post.Title,
+                Content = post.Content,
+                MediaUrl = post.MediaUrl,
+                AmountGained = post.AmountGained,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt
+            };
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     // Get All Posts
     public async Task<List<PostDto>> GetAllPosts()
     {
-        var posts = await _dbContext.Posts.ToListAsync();
-        return posts.ConvertAll(post => new PostDto
+        try
         {
-            Id = post.Id,
-            UserId = post.UserId,
-            Title = post.Title,
-            Content = post.Content,
-            MediaUrl = post.MediaUrl,
-            AmountGained = post.AmountGained,
-            CreatedAt = post.CreatedAt,
-            UpdatedAt = post.UpdatedAt
-        });
+            var posts = await _dbContext.Posts.ToListAsync();
+            return posts.ConvertAll(post => new PostDto
+            {
+                Id = post.Id,
+                UserId = post.UserId,
+                Title = post.Title,
+                Content = post.Content,
+                MediaUrl = post.MediaUrl,
+                AmountGained = post.AmountGained,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt
+            });
+        }
+        catch (Exception)
+        {
+            return new List<PostDto>();
+        }
     }
 
     // Update a Post
-    public async Task<ResponseDto> UpdatePost(int postId, UpdatePostDto postDto)
+    public async Task<ResponseDto> UpdatePost(int postId, int userId, UpdatePostDto postDto)
     {
-        var existingPost = await _dbContext.Posts.FindAsync(postId);
-        if (existingPost == null)
+        try
         {
-            return new ResponseDto { status = false, message = "Post not found!" };
+            var existingPost = await _dbContext.Posts.FindAsync(postId);
+            if (existingPost == null)
+            {
+                return new ResponseDto { Status = false, Message = "Post not found!" };
+            }
+
+            // Check if the authenticated user is the owner of the post
+            if (existingPost.UserId != userId)
+            {
+               return new ResponseDto { Status = false, Message = "Unauthorized: You can only update your own posts." };
+            }
+
+
+
+            existingPost.Title = postDto.Title;
+            existingPost.Content = postDto.Content;
+            existingPost.MediaUrl = postDto.MediaUrl ?? existingPost.MediaUrl;
+            existingPost.UpdatedAt = DateTime.UtcNow;
+
+            await _dbContext.SaveChangesAsync();
+            
+            return new ResponseDto { Status = true, Message = "Post updated successfully!" };
         }
-
-        existingPost.Title = postDto.Title;
-        existingPost.Content = postDto.Content;
-        existingPost.MediaUrl = postDto.MediaUrl ?? existingPost.MediaUrl;
-        existingPost.UpdatedAt = DateTime.UtcNow;
-
-        await _dbContext.SaveChangesAsync();
-        
-        return new ResponseDto { status = true, message = "Post updated successfully!" };
+        catch (Exception ex)
+        {
+            return new ResponseDto { Status = false, Message = "An error occurred while updating the post." };
+        }
     }
 
     // Delete a Post
-    public async Task<ResponseDto> DeletePost(int postId)
+    public async Task<ResponseDto> DeletePost(int postId, int userId, bool isAdmin)
     {
-        var post = await _dbContext.Posts.FindAsync(postId);
-        if (post == null)
+        try
         {
-            return new ResponseDto { status = false, message = "Post not found!" };
+            var post = await _dbContext.Posts.FindAsync(postId);
+            if (post == null)
+            {
+                return new ResponseDto { Status = false, Message = "Post not found!" };
+            }
+
+            // Check if the user is the owner of the post or an admin
+            if (post.UserId != userId && !isAdmin)
+            {
+                return new ResponseDto { Status = false, Message = "You can only delete your own posts or if you are an admin." };
+            }
+
+            _dbContext.Posts.Remove(post);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseDto { Status = true, Message = "Post deleted successfully!" };
         }
-
-        _dbContext.Posts.Remove(post);
-        await _dbContext.SaveChangesAsync();
-
-        return new ResponseDto { status = true, message = "Post deleted successfully!" };
+        catch (Exception ex)
+        {
+            return new ResponseDto { Status = false, Message = "An error occurred while deleting the post." };
+        }
     }
 }
