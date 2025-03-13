@@ -21,8 +21,10 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()
             .Property(u => u.createdAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
         modelBuilder.Entity<Donation>()
-    .HasKey(d => d.Id);
+            .HasKey(d => d.Id);
+
         modelBuilder.Entity<Donation>()
             .Property(d => d.UserId)
             .IsRequired();
@@ -30,8 +32,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Donation>()
             .Property(d => d.Amount)
             .IsRequired();
+
         modelBuilder.Entity<Post>()
-    .HasKey(p => p.Id);
+            .HasKey(p => p.Id);
 
         modelBuilder.Entity<Post>()
             .Property(p => p.UserId)
@@ -52,6 +55,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Post>()
             .Property(p => p.AmountGained)
             .HasDefaultValue(0);
+
         modelBuilder.Entity<User>()
     .Property(u => u.createdAt)
     .HasColumnType("timestamp")
@@ -63,7 +67,10 @@ public class AppDbContext : DbContext
             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
             .ValueGeneratedOnAdd();
     });
-
-
+    
+    modelBuilder.Entity<Donation>()
+        .HasOne<Post>(d => d.Post)
+        .WithMany(p => p.Donations) 
+        .HasForeignKey(d => d.PostId); 
     }
 }

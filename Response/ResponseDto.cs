@@ -8,4 +8,7 @@ public class ResponseDto
 
     public int? PostId { get; set; }  
     public PostDto? PostDetails { get; set; }  
+
+    public DonationDto? DonationDetails { get; set; }  
 }
+
