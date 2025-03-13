@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\benel\\OneDrive\\Documents\\Software engineering\\CrowdFundingProject\\CroundFundingProject.csproj": {}
+    "C:\\CroundFundingProject\\CroundFundingProject\\CroundFundingProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\benel\\OneDrive\\Documents\\Software engineering\\CrowdFundingProject\\CroundFundingProject.csproj": {
+    "C:\\CroundFundingProject\\CroundFundingProject\\CroundFundingProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\benel\\OneDrive\\Documents\\Software engineering\\CrowdFundingProject\\CroundFundingProject.csproj",
+        "projectUniqueName": "C:\\CroundFundingProject\\CroundFundingProject\\CroundFundingProject.csproj",
         "projectName": "CroundFundingProject",
-        "projectPath": "C:\\Users\\benel\\OneDrive\\Documents\\Software engineering\\CrowdFundingProject\\CroundFundingProject.csproj",
-        "packagesPath": "C:\\Users\\benel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\benel\\OneDrive\\Documents\\Software engineering\\CrowdFundingProject\\obj\\",
+        "projectPath": "C:\\CroundFundingProject\\CroundFundingProject\\CroundFundingProject.csproj",
+        "packagesPath": "C:\\Users\\ahmed\\.nuget\\packages\\",
+        "outputPath": "C:\\CroundFundingProject\\CroundFundingProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\benel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ahmed\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -70,7 +70,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.6.2, )"
+              "version": "[7.3.1, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
@@ -96,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
