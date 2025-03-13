@@ -34,23 +34,23 @@ public class AppDbContext : DbContext
     .HasKey(p => p.Id);
 
         modelBuilder.Entity<Post>()
-            .Property(p => p.user_id)
+            .Property(p => p.UserId)
             .IsRequired();
 
         modelBuilder.Entity<Post>()
-            .Property(p => p.title)
+            .Property(p => p.Title)
             .IsRequired();
 
         modelBuilder.Entity<Post>()
-            .Property(p => p.content)
+            .Property(p => p.Content)
             .IsRequired();
 
         modelBuilder.Entity<Post>()
-            .Property(p => p.media_url)
+            .Property(p => p.MediaUrl)
             .IsRequired();
 
         modelBuilder.Entity<Post>()
-            .Property(p => p.amount_gained)
+            .Property(p => p.AmountGained)
             .HasDefaultValue(0);
         modelBuilder.Entity<User>()
     .Property(u => u.createdAt)
