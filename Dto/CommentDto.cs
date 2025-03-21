@@ -1,6 +1,6 @@
 public class CommentDto
 {
-  public int PostId { get; set; }
+  public required int PostId { get; set; }
   public int UserId { get; set; }
-  public string CommentText { get; set; }
+  public required string CommentText { get; set; }
 }

@@ -6,6 +6,7 @@ public class PostDto
     public required string Content { get; set; }
     public string? MediaUrl { get; set; }
     public decimal AmountGained { get; set; }
+    public decimal TargetAmount {get; set;}
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

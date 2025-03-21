@@ -25,7 +25,8 @@ public class PostController : ControllerBase
         {
             // Get the authenticated user's ID from the JWT token
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var result = await _postService.CreatePost(request, userId);
+            request.UserId = userId;
+            var result = await _postService.CreatePost(request);
 
             if (!result.Status) 
                 return BadRequest(result);
@@ -44,7 +45,7 @@ public class PostController : ControllerBase
     }
 
     // Get a Single Post by ID
-    [HttpGet("{id}")]
+    [HttpGet("getPost/{id}")]
     public async Task<IActionResult> GetPostById(int id)
     {
         try
@@ -78,7 +79,7 @@ public class PostController : ControllerBase
 
     // Update a Post
     [Authorize]
-    [HttpPut("{id}")]
+    [HttpPut("updatePost/{id}")]
     public async Task<IActionResult> UpdatePost(int id, [FromBody] UpdatePostDto request)
     {
         try
@@ -107,7 +108,7 @@ public class PostController : ControllerBase
 
     // Delete a Post
     [Authorize]
-    [HttpDelete("{id}")]
+    [HttpDelete("DeletePost/{id}")]
     public async Task<IActionResult> DeletePost(int id)
     {
         try

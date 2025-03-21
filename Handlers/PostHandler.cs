@@ -13,12 +13,12 @@ public class PostHandler
     }
 
     // Create a Post
-    public async Task<ResponseDto> CreatePost(CreatePostDto postDto, int userId)
+    public async Task<ResponseDto> CreatePost(CreatePostDto postDto)
     {
         try
         {
-        
-            var newPost = new Post(userId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0);
+
+            var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0, postDto.TargetAmount);
 
             _dbContext.Posts.Add(newPost);
             await _dbContext.SaveChangesAsync();
@@ -31,16 +31,17 @@ public class PostHandler
                 Content = newPost.Content,
                 MediaUrl = newPost.MediaUrl,
                 AmountGained = newPost.AmountGained,
+                TargetAmount = newPost.TargetAmount,
                 CreatedAt = newPost.CreatedAt,
                 UpdatedAt = newPost.UpdatedAt
             };
 
-            return new ResponseDto 
-            { 
-                Status = true, 
+            return new ResponseDto
+            {
+                Status = true,
                 Message = "Post created successfully!",
-                PostId = newPost.Id,  
-                PostDetails = postDetails 
+                PostId = newPost.Id,
+                PostDetails = postDetails
             };
         }
         catch (Exception ex)
@@ -65,6 +66,7 @@ public class PostHandler
                 Content = post.Content,
                 MediaUrl = post.MediaUrl,
                 AmountGained = post.AmountGained,
+                TargetAmount = post.TargetAmount,
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             };
@@ -113,7 +115,7 @@ public class PostHandler
             // Check if the authenticated user is the owner of the post
             if (existingPost.UserId != userId)
             {
-               return new ResponseDto { Status = false, Message = "Unauthorized: You can only update your own posts." };
+                return new ResponseDto { Status = false, Message = "Unauthorized: You can only update your own posts." };
             }
 
 
@@ -124,7 +126,7 @@ public class PostHandler
             existingPost.UpdatedAt = DateTime.UtcNow;
 
             await _dbContext.SaveChangesAsync();
-            
+
             return new ResponseDto { Status = true, Message = "Post updated successfully!" };
         }
         catch (Exception ex)

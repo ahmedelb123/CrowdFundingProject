@@ -17,14 +17,14 @@ public class DonationHandler
         try
         {
             // Check if the post exists
-            var post = await _dbContext.Posts.FindAsync(donationDto.PostId);
+            Post post = await _dbContext.Posts.FindAsync(donationDto.PostId);
             if (post == null)
             {
                 return new ResponseDto { Status = false, Message = "Post not found!" };
             }
 
             // Check if the user exists
-            var userExists = await _dbContext.Users.AnyAsync(u => u.id == userId);
+            bool userExists = await _dbContext.Users.AnyAsync(u => u.id == userId);
             if (!userExists)
             {
                 return new ResponseDto { Status = false, Message = "User does not exist!" };
@@ -41,6 +41,12 @@ public class DonationHandler
             post.AmountGained += donationDto.Amount;
             _dbContext.Posts.Update(post);
 
+
+            if (post.AmountGained >= post.TargetAmount)
+            {
+                //Delete the post form the db
+                _dbContext.Posts.Remove(post);
+            }
             await _dbContext.SaveChangesAsync();
 
             var donationDetails = new DonationDto

@@ -8,6 +8,7 @@ public class Post
     public string Content { get; set; }
     public string MediaUrl { get; set; } 
     public decimal AmountGained { get; set; }
+    public decimal TargetAmount {get; set;}
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
@@ -15,12 +16,13 @@ public class Post
 
     public Post() {}
 
-    public Post(int userId, string title, string content, string mediaUrl, int amountGained)
+    public Post(int userId, string title, string content, string mediaUrl, decimal amountGained, decimal targetAmount)
     {
         this.UserId = userId;
         this.Title = title;
         this.Content = content;
         this.MediaUrl = mediaUrl;
         this.AmountGained = amountGained;
+        this.TargetAmount = targetAmount;
     }
 }
