@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
           email: email,
           password: password,
         }),
+        credentials: "include",
       }
     );
 

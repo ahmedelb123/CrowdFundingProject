@@ -39,12 +39,13 @@ document.addEventListener("DOMContentLoaded", function () {
         email: email,
         password: password,
       }),
+      credentials: "include",
     });
 
     const data = await response.json();
     // check of the account exist in the db
     if (data.status) {
-      localStorage.setItem("userId", data.id);
+      localStorage.setItem("userId", data.id)
       window.location.href = "Index.html";
     } else {
       document.querySelector("input[name='email']").style.border =
