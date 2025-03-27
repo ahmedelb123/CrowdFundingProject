@@ -102,7 +102,7 @@ public class PostHandler
     }
 
     // Update a Post
-    public async Task<ResponseDto> UpdatePost(int postId, int userId, UpdatePostDto postDto)
+    public async Task<ResponseDto> UpdatePost(int postId, UpdatePostDto postDto)
     {
         try
         {
@@ -113,7 +113,7 @@ public class PostHandler
             }
 
             // Check if the authenticated user is the owner of the post
-            if (existingPost.UserId != userId)
+            if (existingPost.UserId != postDto.UserId)
             {
                 return new ResponseDto { Status = false, Message = "Unauthorized: You can only update your own posts." };
             }

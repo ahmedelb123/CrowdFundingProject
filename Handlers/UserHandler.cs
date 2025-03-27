@@ -39,58 +39,31 @@ public async Task<ResponseDto> CreateUser(string name, string surname, string em
     return new ResponseDto { Status = true, Message = ACCOUNT_CREATED };
 }
 
-    public async Task<ResponseDto> Login(string email, string password)
+    public async Task<ResponseDto> Login(LoginDto loginDto)
 {
-    User? userExist = await _dbContext.Users.FirstOrDefaultAsync(u => u.email == email);
+    User? userExist = await _dbContext.Users.FirstOrDefaultAsync(u => u.email == loginDto.Email);
 
     if (userExist == null)
     {
         return new ResponseDto { Status = false, Message = "This account doesn't exist" };
     }
-    if (userExist.password_hash != password)
+    if (userExist.password_hash != loginDto.Password)
     {
         return new ResponseDto { Status = false, Message = "Your email or password is incorrect" };
     }
 
     // Generate JWT Token
-    var token = GenerateJwtToken(userExist);
+    
 
     return new ResponseDto
     {
         Id = userExist.id,
         Status = true,
         Message = "You logged in successfully",
-        Token = token
     };
  }
 
-    private string GenerateJwtToken(User user)
-    {
-        var jwtKey = _configuration["Jwt:SecretKey"];
-        var jwtIssuer = _configuration["Jwt:Issuer"];
-        var jwtAudience = _configuration["Jwt:Audience"];
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
-            new Claim(ClaimTypes.Email, user.email),
-            new Claim("IsAdmin", user.isAdmin.ToString())
-        };
-
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: jwtIssuer,
-            audience: jwtAudience,
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
-    }
+    
 }
 
 

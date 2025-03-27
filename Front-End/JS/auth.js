@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!authButtons) return;
 
   try {
-    const auth = !!localStorage.getItem("userId");
+    const auth = !!localStorage.getItem("Id");
 
     if (auth) {
       authButtons.innerHTML = `
@@ -32,19 +32,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function logout() {
   try {
-    const response = await fetch("http://localhost:5228/api/user/logout", {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      localStorage.removeItem("userId");
-      window.location.href = "login.html";
-    } else {
-      alert("Logout failed: " + result.message);
-    }
+    localStorage.removeItem("Id");
+    window.location.href = "login.html";
   } catch (err) {
     alert("Logout error: " + err.message);
   }

@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Donation> Donations { get; set; }
+    public DbSet<BankAccount> BankAccounts {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,10 +68,12 @@ public class AppDbContext : DbContext
             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
             .ValueGeneratedOnAdd();
     });
+
+    modelBuilder.Entity<BankAccount>()
+    .Property(b => b.CreatedAt)
+    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
     
-    modelBuilder.Entity<Donation>()
-        .HasOne<Post>(d => d.Post)
-        .WithMany(p => p.Donations) 
-        .HasForeignKey(d => d.PostId); 
+    
     }
 }

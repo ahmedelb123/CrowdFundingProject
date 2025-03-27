@@ -17,22 +17,19 @@ public class PostController : ControllerBase
     }
 
     // Create a Post
-    [Authorize]
+
     [HttpPost("create")]
     public async Task<IActionResult> CreatePost([FromBody] CreatePostDto request)
     {
         try
         {
-            // Get the authenticated user's ID from the JWT token
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-            request.UserId = userId;
             var result = await _postService.CreatePost(request);
 
-            if (!result.Status) 
+            if (!result.Status)
                 return BadRequest(result);
 
-            return Ok(new 
-            { 
+            return Ok(new
+            {
                 message = result.Message,
                 postId = result.PostId,
                 postDetails = result.PostDetails
@@ -51,7 +48,7 @@ public class PostController : ControllerBase
         try
         {
             var result = await _postService.GetPostById(id);
-            if (result == null) 
+            if (result == null)
                 return NotFound(new { message = "Post not found!" });
 
             return Ok(result);
@@ -78,24 +75,24 @@ public class PostController : ControllerBase
     }
 
     // Update a Post
-    [Authorize]
+
     [HttpPut("updatePost/{id}")]
     public async Task<IActionResult> UpdatePost(int id, [FromBody] UpdatePostDto request)
     {
         try
         {
-            // Get the authenticated user's ID from the JWT token
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var result = await _postService.UpdatePost(id, userId, request);
 
-            if (!result.Status) 
-                return BadRequest(new { 
-                message = result.Message,
-                state = result.Status,
+            var result = await _postService.UpdatePost(id, request);
+
+            if (!result.Status)
+                return BadRequest(new
+                {
+                    message = result.Message,
+                    state = result.Status,
                 });
 
-            return Ok(new 
-            { 
+            return Ok(new
+            {
                 message = result.Message,
                 state = result.Status,
             });
@@ -118,18 +115,20 @@ public class PostController : ControllerBase
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
 
             // Get the 'IsAdmin' claim from the JWT token
-            var isAdminClaim = User.FindFirst("IsAdmin")?.Value ?? "false"; 
+            var isAdminClaim = User.FindFirst("IsAdmin")?.Value ?? "false";
             bool isAdmin = bool.Parse(isAdminClaim);
 
             var result = await _postService.DeletePost(id, userId, isAdmin);
 
-            if (!result.Status) 
-                return BadRequest(new { 
-                message = result.Message,
-                state = result.Status,
-            });
+            if (!result.Status)
+                return BadRequest(new
+                {
+                    message = result.Message,
+                    state = result.Status,
+                });
 
-            return Ok(new{ 
+            return Ok(new
+            {
                 message = result.Message,
                 state = result.Status,
             });

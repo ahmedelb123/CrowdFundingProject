@@ -20,9 +20,7 @@ public class CommentController : ControllerBase
   {
     try
     {
-      var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-      commentDto.UserId = userId;
-      var result = await commentHandler.addComment(commentDto.PostId, commentDto.UserId, commentDto.CommentText);
+      var result = await commentHandler.addComment(commentDto);
       
       if (!result.Status) 
       {

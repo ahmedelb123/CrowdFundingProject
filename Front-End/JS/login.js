@@ -36,16 +36,18 @@ document.addEventListener("DOMContentLoaded", function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        Email: email,
+        Password: password,
       }),
       credentials: "include",
     });
 
     const data = await response.json();
     // check of the account exist in the db
-    if (data.status) {
-      localStorage.setItem("userId", data.id)
+    console.log(data);
+    console.log(password);
+    if (response.ok) {
+      localStorage.setItem("Id", data.id);
       window.location.href = "Index.html";
     } else {
       document.querySelector("input[name='email']").style.border =

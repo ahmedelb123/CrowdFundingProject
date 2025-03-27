@@ -12,7 +12,7 @@ public class DonationHandler
     }
 
     // Create a Donation
-    public async Task<ResponseDto> CreateDonation(CreateDonationDto donationDto, int userId)
+    public async Task<ResponseDto> CreateDonation(CreateDonationDto donationDto)
     {
         try
         {
@@ -24,7 +24,7 @@ public class DonationHandler
             }
 
             // Check if the user exists
-            bool userExists = await _dbContext.Users.AnyAsync(u => u.id == userId);
+            bool userExists = await _dbContext.Users.AnyAsync(u => u.id == donationDto.UserId);
             if (!userExists)
             {
                 return new ResponseDto { Status = false, Message = "User does not exist!" };
@@ -33,8 +33,22 @@ public class DonationHandler
             // Round the amount to 2 decimal places before creating the donation
             decimal roundedAmount = Math.Round(donationDto.Amount, 2);
 
+
+
+            var bankAccount = await _dbContext.BankAccounts.FirstOrDefaultAsync(b => b.CardNumber == donationDto.CardNumber);
+
+            if (bankAccount == null)
+            {
+
+                bankAccount = new BankAccount(donationDto.UserId, donationDto.PostId, donationDto.HolderName, donationDto.CardNumber, donationDto.SecretNumber, donationDto.ExpiryDate);
+                _dbContext.BankAccounts.Add(bankAccount);
+                await _dbContext.SaveChangesAsync();
+                bankAccount = await _dbContext.BankAccounts.FindAsync(donationDto.CardNumber);
+
+            }
+
             // Create the donation
-            var newDonation = new Donation(userId, roundedAmount, donationDto.PostId);
+            var newDonation = new Donation(donationDto.UserId, roundedAmount, donationDto.PostId, bankAccount.Id);
             _dbContext.Donations.Add(newDonation);
 
             // Update the post's amount gained
