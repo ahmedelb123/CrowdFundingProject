@@ -6,9 +6,7 @@ public class Comment
     public int userId {get; set;}
     public int postId {get; set;}
     public string text { get; set; }
-    public DateTime CreatedAt { get; set; }
-
-    public Comment(){}
+    public DateTime CreatedAt {get; set;}
 
     public Comment(int postId, int userId, string text){
       this.postId = postId;

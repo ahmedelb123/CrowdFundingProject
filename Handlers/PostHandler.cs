@@ -17,8 +17,16 @@ public class PostHandler
     {
         try
         {
+            var user = await _dbContext.Users.FindAsync(postDto.UserId);
+            if(user == null){
+                return new ResponseDto
+            {
+                Status = false,
+                Message = "User dont exist"
+            };
+            }
 
-            var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0, postDto.TargetAmount);
+            var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0, postDto.TargetAmount, postDto.Type);
 
             _dbContext.Posts.Add(newPost);
             await _dbContext.SaveChangesAsync();
@@ -28,6 +36,7 @@ public class PostHandler
                 Id = newPost.Id,
                 UserId = newPost.UserId,
                 Title = newPost.Title,
+                Type = newPost.Type,
                 Content = newPost.Content,
                 MediaUrl = newPost.MediaUrl,
                 AmountGained = newPost.AmountGained,
@@ -62,6 +71,7 @@ public class PostHandler
             {
                 Id = post.Id,
                 UserId = post.UserId,
+                Type = post.Type,
                 Title = post.Title,
                 Content = post.Content,
                 MediaUrl = post.MediaUrl,
@@ -87,10 +97,39 @@ public class PostHandler
             {
                 Id = post.Id,
                 UserId = post.UserId,
+                Type = post.Type,
                 Title = post.Title,
                 Content = post.Content,
                 MediaUrl = post.MediaUrl,
                 AmountGained = post.AmountGained,
+                TargetAmount = post.TargetAmount,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt
+            });
+        }
+        catch (Exception)
+        {
+            return new List<PostDto>();
+        }
+    }
+
+    public async Task<List<PostDto>> getPostByType(string postType)
+    {
+        try
+        {
+            var posts = await _dbContext.Posts
+    .Where(p => p.Type == postType)
+    .ToListAsync();
+            return posts.ConvertAll(post => new PostDto
+            {
+                Id = post.Id,
+                UserId = post.UserId,
+                Type = post.Type,
+                Title = post.Title,
+                Content = post.Content,
+                MediaUrl = post.MediaUrl,
+                AmountGained = post.AmountGained,
+                TargetAmount = post.TargetAmount,
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             });

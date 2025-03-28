@@ -73,6 +73,18 @@ public class PostController : ControllerBase
             return StatusCode(500, new { message = "An error occurred while fetching posts.", error = ex.Message });
         }
     }
+    [HttpGet("getPostByType")]
+    public async Task<IActionResult> getPostByType([FromQuery] string type){
+         try
+        {
+            var result = await _postService.getPostByType(type);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while fetching posts by type.", error = ex.Message });
+        }
+    }
 
     // Update a Post
 

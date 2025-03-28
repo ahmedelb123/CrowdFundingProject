@@ -9,7 +9,7 @@ public class BankAccount
     public long CardNumber{get; set;}
     public int SecretNumber{get; set;}
     public string ExpiryDate{get; set;}
-    public DateTime CreatedAt = DateTime.UtcNow;
+    public DateTime CreatedAt {get; set;}
 
     // Constructor
     public BankAccount(int userId, int postId, string holderName, long cardNumber, int secretNumber, string expiryDate)
@@ -20,6 +20,5 @@ public class BankAccount
         this.CardNumber = cardNumber;
         this.SecretNumber = secretNumber;
         this.ExpiryDate = expiryDate;
-        this.CreatedAt = DateTime.UtcNow;
     }
 }
