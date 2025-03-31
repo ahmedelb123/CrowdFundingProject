@@ -18,7 +18,10 @@ public class PostHandler
         try
         {
 
+
+
             var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0, postDto.TargetAmount);
+                    Console.WriteLine("fromPostHandler.cs  " + newPost.TargetAmount);
 
             _dbContext.Posts.Add(newPost);
             await _dbContext.SaveChangesAsync();
@@ -83,6 +86,7 @@ public class PostHandler
         try
         {
             var posts = await _dbContext.Posts.ToListAsync();
+            
             return posts.ConvertAll(post => new PostDto
             {
                 Id = post.Id,
@@ -91,6 +95,7 @@ public class PostHandler
                 Content = post.Content,
                 MediaUrl = post.MediaUrl,
                 AmountGained = post.AmountGained,
+                TargetAmount = post.TargetAmount,  
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             });
