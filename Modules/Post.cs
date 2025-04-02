@@ -15,6 +15,7 @@ public class Post
 
     public Post(int userId, string title, string content, string mediaUrl, decimal amountGained, decimal targetAmount, string type)
     {
+
         this.UserId = userId;
         this.Title = title;
         this.Content = content;

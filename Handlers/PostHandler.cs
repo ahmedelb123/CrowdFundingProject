@@ -17,14 +17,6 @@ public class PostHandler
     {
         try
         {
-            var user = await _dbContext.Users.FindAsync(postDto.UserId);
-            if(user == null){
-                return new ResponseDto
-            {
-                Status = false,
-                Message = "User dont exist"
-            };
-            }
 
             var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0, postDto.TargetAmount, postDto.Type);
 
@@ -93,6 +85,7 @@ public class PostHandler
         try
         {
             var posts = await _dbContext.Posts.ToListAsync();
+            
             return posts.ConvertAll(post => new PostDto
             {
                 Id = post.Id,
@@ -129,7 +122,6 @@ public class PostHandler
                 Content = post.Content,
                 MediaUrl = post.MediaUrl,
                 AmountGained = post.AmountGained,
-                TargetAmount = post.TargetAmount,
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             });
