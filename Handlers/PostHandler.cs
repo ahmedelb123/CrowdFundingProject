@@ -81,30 +81,78 @@ public class PostHandler
     }
 
     // Get All Posts
-    public async Task<List<PostDto>> GetAllPosts()
-    {
-        try
-        {
-            var posts = await _dbContext.Posts.ToListAsync();
+    // public async Task<List<PostDto>> GetAllPosts()
+    // {
+    //     try
+    //     {
+    //         var posts = await _dbContext.Posts.ToListAsync();
             
-            return posts.ConvertAll(post => new PostDto
-            {
-                Id = post.Id,
-                UserId = post.UserId,
-                Title = post.Title,
-                Content = post.Content,
-                MediaUrl = post.MediaUrl,
-                AmountGained = post.AmountGained,
-                TargetAmount = post.TargetAmount,  
-                CreatedAt = post.CreatedAt,
-                UpdatedAt = post.UpdatedAt
-            });
-        }
-        catch (Exception)
+    //         return posts.ConvertAll(post => new PostDto
+    //         {
+    //             Id = post.Id,
+    //             UserId = post.UserId,
+    //             Title = post.Title,
+    //             Content = post.Content,
+    //             MediaUrl = post.MediaUrl,
+    //             AmountGained = post.AmountGained,
+    //             TargetAmount = post.TargetAmount,  
+    //             CreatedAt = post.CreatedAt,
+    //             UpdatedAt = post.UpdatedAt
+    //         });
+    //     }
+    //     catch (Exception)
+    //     {
+    //         return new List<PostDto>();
+    //     }
+    // }
+
+    public async Task<PagedResult<PostDto>> GetAllPosts(int page, int pageSize)
+{
+    try
+    {
+        var totalPosts = await _dbContext.Posts.CountAsync();
+
+        var posts = await _dbContext.Posts
+            .OrderByDescending(p => p.CreatedAt) // Sort by newest posts first
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var postDtos = posts.ConvertAll(post => new PostDto
         {
-            return new List<PostDto>();
-        }
+            Id = post.Id,
+            UserId = post.UserId,
+            Title = post.Title,
+            Content = post.Content,
+            MediaUrl = post.MediaUrl,
+            AmountGained = post.AmountGained,
+            TargetAmount = post.TargetAmount,
+            CreatedAt = post.CreatedAt,
+            UpdatedAt = post.UpdatedAt
+        });
+
+        return new PagedResult<PostDto>
+        {
+            TotalItems = totalPosts,
+            TotalPages = (int)Math.Ceiling(totalPosts / (double)pageSize),
+            CurrentPage = page,
+            PageSize = pageSize,
+            Items = postDtos
+        };
     }
+    catch (Exception)
+    {
+        return new PagedResult<PostDto>
+        {
+            TotalItems = 0,
+            TotalPages = 0,
+            CurrentPage = page,
+            PageSize = pageSize,
+            Items = new List<PostDto>()
+        };
+    }
+}
+
 
     // Update a Post
     public async Task<ResponseDto> UpdatePost(int postId, UpdatePostDto postDto)

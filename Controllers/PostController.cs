@@ -59,20 +59,35 @@ public class PostController : ControllerBase
         }
     }
 
-    // Get All Posts
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAllPosts()
+    // // Get All Posts
+    // [HttpGet("all")]
+    // public async Task<IActionResult> GetAllPosts()
+    // {
+    //     try
+    //     {
+    //         var result = await _postService.GetAllPosts();
+    //         return Ok(result);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         return StatusCode(500, new { message = "An error occurred while fetching posts.", error = ex.Message });
+    //     }
+    // }
+
+[HttpGet("all")]
+public async Task<IActionResult> GetAllPosts(int page = 1, int pageSize = 10)
+{
+    try
     {
-        try
-        {
-            var result = await _postService.GetAllPosts();
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "An error occurred while fetching posts.", error = ex.Message });
-        }
+        var result = await _postService.GetAllPosts(page, pageSize);
+        return Ok(result);
     }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new { message = "An error occurred while fetching posts.", error = ex.Message });
+    }
+}
+
 
     // Update a Post
 
