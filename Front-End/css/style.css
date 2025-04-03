@@ -362,6 +362,11 @@ footer {
   left: 0;
 }
 
+.commentsList {
+  max-height: 10rem;
+  overflow-y: scroll;
+}
+
 /* Add after .container styles */
 .search-filter-container {
   display: flex;
