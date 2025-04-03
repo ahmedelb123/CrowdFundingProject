@@ -58,14 +58,30 @@ public class PostController : ControllerBase
             return StatusCode(500, new { message = "An error occurred while retrieving the post.", error = ex.Message });
         }
     }
-
-    // Get All Posts
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAllPosts()
+    [HttpGet("getPostsByType/{type}")]
+    public async Task<IActionResult> GetPostsByType(string type)
     {
         try
         {
-            var result = await _postService.GetAllPosts();
+            var results = await _postService.GetPostsByType(type);
+            if (results == null)
+                return NotFound(new { message = "No posts found for this type!" });
+
+            return Ok(results);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while retrieving posts.", error = ex.Message });
+        }
+    }
+
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllPosts(int page = 1, int pageSize = 10)
+    {
+        try
+        {
+            var result = await _postService.GetAllPosts(page, pageSize);
             return Ok(result);
         }
         catch (Exception ex)
@@ -73,18 +89,7 @@ public class PostController : ControllerBase
             return StatusCode(500, new { message = "An error occurred while fetching posts.", error = ex.Message });
         }
     }
-    [HttpGet("getPostByType")]
-    public async Task<IActionResult> getPostByType([FromQuery] string type){
-         try
-        {
-            var result = await _postService.getPostByType(type);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "An error occurred while fetching posts by type.", error = ex.Message });
-        }
-    }
+
 
     // Update a Post
 
@@ -116,7 +121,6 @@ public class PostController : ControllerBase
     }
 
     // Delete a Post
-    [Authorize]
     [HttpDelete("DeletePost/{id}")]
     public async Task<IActionResult> DeletePost(int id)
     {

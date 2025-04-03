@@ -362,6 +362,11 @@ footer {
   left: 0;
 }
 
+.commentsList {
+  max-height: 10rem;
+  overflow-y: scroll;
+}
+
 /* Add after .container styles */
 .search-filter-container {
   display: flex;
@@ -616,4 +621,77 @@ footer {
 .general-btn:hover {
   background-color: #6d44e5 !important; /* Darker shade for hover */
   border-color: #6d44e5 !important;
+}
+
+/* pagination */
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background-color: white;
+  color: var(--primary-color);
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.pagination button.active {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+}
+
+.pagination button[disabled] {
+  background-color: var(--gray-200);
+  color: var(--gray-600);
+  cursor: not-allowed;
+}
+
+.pagination .page-number {
+  font-weight: 500;
+}
+
+.pagination .previous,
+.pagination .next {
+  font-weight: 600;
+}
+
+.pagination .dots {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.page-size-dropdown-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px 0;
+  padding: 5px;
+}
+
+.page-size-dropdown-container label {
+  font-size: 14px;
+  white-space: nowrap;
+  margin: 0 10px 0 0;
+}
+
+#pageSizeDropdown {
+  padding: 5px;
+  font-size: 14px;
+  width: 10rem;
+  max-width: 100%;
 }

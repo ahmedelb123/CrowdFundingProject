@@ -78,15 +78,50 @@ public class PostHandler
             return null;
         }
     }
-
-    // Get All Posts
-    public async Task<List<PostDto>> GetAllPosts()
+    public async Task<List<PostDto>> GetPostsByType(string postType)
     {
         try
         {
-            var posts = await _dbContext.Posts.ToListAsync();
-            
-            return posts.ConvertAll(post => new PostDto
+            var posts = await _dbContext.Posts
+                .Where(p => p.Type == postType)
+                .Select(post => new PostDto
+                {
+                    Id = post.Id,
+                    UserId = post.UserId,
+                    Type = post.Type,
+                    Title = post.Title,
+                    Content = post.Content,
+                    MediaUrl = post.MediaUrl,
+                    AmountGained = post.AmountGained,
+                    TargetAmount = post.TargetAmount,
+                    CreatedAt = post.CreatedAt,
+                    UpdatedAt = post.UpdatedAt
+                })
+                .ToListAsync();
+
+            return posts;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+
+
+    public async Task<PagedResult<PostDto>> GetAllPosts(int page, int pageSize)
+    {
+        try
+        {
+            var totalPosts = await _dbContext.Posts.CountAsync();
+
+            var posts = await _dbContext.Posts
+                .OrderByDescending(p => p.CreatedAt) // Sort by newest posts first
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var postDtos = posts.ConvertAll(post => new PostDto
             {
                 Id = post.Id,
                 UserId = post.UserId,
@@ -99,38 +134,29 @@ public class PostHandler
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt
             });
+
+            return new PagedResult<PostDto>
+            {
+                TotalItems = totalPosts,
+                TotalPages = (int)Math.Ceiling(totalPosts / (double)pageSize),
+                CurrentPage = page,
+                PageSize = pageSize,
+                Items = postDtos
+            };
         }
         catch (Exception)
         {
-            return new List<PostDto>();
+            return new PagedResult<PostDto>
+            {
+                TotalItems = 0,
+                TotalPages = 0,
+                CurrentPage = page,
+                PageSize = pageSize,
+                Items = new List<PostDto>()
+            };
         }
     }
 
-    public async Task<List<PostDto>> getPostByType(string postType)
-    {
-        try
-        {
-            var posts = await _dbContext.Posts
-    .Where(p => p.Type == postType)
-    .ToListAsync();
-            return posts.ConvertAll(post => new PostDto
-            {
-                Id = post.Id,
-                UserId = post.UserId,
-                Type = post.Type,
-                Title = post.Title,
-                Content = post.Content,
-                MediaUrl = post.MediaUrl,
-                AmountGained = post.AmountGained,
-                CreatedAt = post.CreatedAt,
-                UpdatedAt = post.UpdatedAt
-            });
-        }
-        catch (Exception)
-        {
-            return new List<PostDto>();
-        }
-    }
 
     // Update a Post
     public async Task<ResponseDto> UpdatePost(int postId, UpdatePostDto postDto)
