@@ -59,11 +59,11 @@ public class PostController : ControllerBase
         }
     }
     [HttpGet("getPostsByType/{type}")]
-    public async Task<IActionResult> GetPostsByType(string type)
+    public async Task<IActionResult> GetPostsByType(string type, int page, int pageSize)
     {
         try
         {
-            var results = await _postService.GetPostsByType(type);
+            var results = await _postService.GetPostsByType(type, page, pageSize);
             if (results == null)
                 return NotFound(new { message = "No posts found for this type!" });
 

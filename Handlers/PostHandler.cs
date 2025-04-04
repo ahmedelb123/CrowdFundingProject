@@ -78,12 +78,21 @@ public class PostHandler
             return null;
         }
     }
-    public async Task<List<PostDto>> GetPostsByType(string postType)
+    public async Task<PagedResult<PostDto>> GetPostsByType(string postType, int page, int pageSize)
     {
         try
         {
+            // Get total count of posts matching the type
+            var totalPosts = await _dbContext.Posts
+                .Where(p => p.Type == postType)
+                .CountAsync();
+
+            // Get paginated posts
             var posts = await _dbContext.Posts
                 .Where(p => p.Type == postType)
+                .OrderByDescending(p => p.CreatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(post => new PostDto
                 {
                     Id = post.Id,
@@ -99,11 +108,25 @@ public class PostHandler
                 })
                 .ToListAsync();
 
-            return posts;
+            return new PagedResult<PostDto>
+            {
+                TotalItems = totalPosts,
+                TotalPages = (int)Math.Ceiling(totalPosts / (double)pageSize),
+                CurrentPage = page,
+                PageSize = pageSize,
+                Items = posts
+            };
         }
         catch (Exception)
         {
-            return null;
+            return new PagedResult<PostDto>
+            {
+                TotalItems = 0,
+                TotalPages = 0,
+                CurrentPage = page,
+                PageSize = pageSize,
+                Items = new List<PostDto>()
+            };
         }
     }
 

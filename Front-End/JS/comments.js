@@ -1,20 +1,15 @@
-// comments.js
 document.addEventListener("DOMContentLoaded", () => {
   const submitCommentBtn = document.getElementById("submitCommentButton");
   const newCommentText = document.getElementById("newCommentText");
   const addCommentSection = document.getElementById("addCommentSection");
 
-  // We'll assume user is logged in if we find a "userId" or "authToken" in localStorage
-  const isLoggedIn = localStorage.getItem("Id"); // or userId
-  console.log(isLoggedIn);
+  // Check if user is logged in
+  const isLoggedIn = localStorage.getItem("Id");
   if (!isLoggedIn) {
-    // Hide the add comment area if not logged in
     addCommentSection.style.display = "none";
   }
 
-  // When user clicks "Submit Comment"
   submitCommentBtn.addEventListener("click", async () => {
-    // window.currentCampaignId holds the post ID
     const postId = window.currentCampaignId;
     const commentText = newCommentText.value.trim();
 
@@ -24,15 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Example: userId might come from localStorage
-      const userId = parseInt(localStorage.getItem("Id") || "0");
+      const userId = localStorage.getItem("Id");
+      if (!userId) {
+        alert("You must be logged in to comment!");
+        return;
+      }
 
-      // Build CommentDto
       const requestBody = {
-        postId: postId,
-        userId: userId,
-        commentText: commentText,
+        postId: parseInt(postId),
+        userId: parseInt(userId),
+        commentText: commentText, // This must match the backend DTO
       };
+      console.log(userId);
+      console.log(postId);
 
       const response = await fetch(
         "http://localhost:5228/api/comment/addComment",
@@ -44,13 +43,15 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const data = await response.json();
-      if (!response.ok) {
-        alert(data.message || "Failed to add comment!");
-      } else {
-        // Clear input
+      console.log(data.status);
+      if (data.status) {
         newCommentText.value = "";
-        // Reload comments
         loadCommentsForCampaign(postId);
+      } else {
+        const errorData = await response.json();
+        console.error("Backend error:", errorData);
+        alert(errorData.message || "Failed to add comment");
+        return;
       }
     } catch (err) {
       console.error("Add comment error:", err);
@@ -59,32 +60,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/**
- * Load all comments for a given campaign (postId) and display in #commentsList
- */
+
+// Load comments function remains the same
 async function loadCommentsForCampaign(postId) {
-  console.log(postId);
   try {
-    const response = await fetch(
+    const response1 = await fetch(
       `http://localhost:5228/api/comment/post/${postId}`
     );
-    console.log(response);
-    if (!response.ok) {
-      console.error("Failed to load comments:", response.status);
-      return;
-    }
 
-    const comments = await response.json();
+    const comments = await response1.json();
+    const userId = localStorage.getItem("Id")
+    const response2 = await fetch(
+      `http://localhost:5228/api/user/getUser/${userId}`
+    );
+    if (!response1.ok || !response2.ok) return;
+
+    const user = await response2.json();
+
     const commentsList = document.getElementById("commentsList");
     commentsList.innerHTML = "";
 
     comments.forEach((comment) => {
       const commentDiv = document.createElement("div");
       commentDiv.classList.add("single-comment");
-      // e.g. show userId or username if you have it
       commentDiv.innerHTML = `
-          <p><strong>User #${comment.userId}:</strong> ${comment.text}</p>
-        `;
+              <p><strong>${user.userName}:</strong> ${comment.text}</p>
+          `;
       commentsList.appendChild(commentDiv);
     });
   } catch (err) {

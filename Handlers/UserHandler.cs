@@ -13,7 +13,7 @@ public class UserHandler
     private const string EXIST_ACCOUNT_WITH_THIS_EMAIL = "There is already an account with this email";
     private const string ACCOUNT_CREATED = "The account is created successfully";
     private readonly AppDbContext _dbContext;
-    private readonly IConfiguration _configuration; 
+    private readonly IConfiguration _configuration;
 
 
     public UserHandler(AppDbContext context, IConfiguration configuration)
@@ -22,48 +22,59 @@ public class UserHandler
         _configuration = configuration;
     }
 
-public async Task<ResponseDto> CreateUser(string name, string surname, string email, string password)
-{
-    // Check if user already exists
-    bool userExists = await _dbContext.Users.AnyAsync(u => u.email == email);
-    if (userExists)
+    public async Task<ResponseDto> CreateUser(string name, string surname, string email, string password)
     {
-        return new ResponseDto { Status = false, Message = EXIST_ACCOUNT_WITH_THIS_EMAIL };
+        // Check if user already exists
+        bool userExists = await _dbContext.Users.AnyAsync(u => u.email == email);
+        if (userExists)
+        {
+            return new ResponseDto { Status = false, Message = EXIST_ACCOUNT_WITH_THIS_EMAIL };
+        }
+
+        // Create new user
+        User newUser = new User(name, surname, email, password);
+        _dbContext.Users.Add(newUser);
+        await _dbContext.SaveChangesAsync();
+
+        return new ResponseDto { Status = true, Message = ACCOUNT_CREATED };
     }
-
-    // Create new user
-    User newUser = new User(name, surname, email, password);
-    _dbContext.Users.Add(newUser);
-    await _dbContext.SaveChangesAsync();
-
-    return new ResponseDto { Status = true, Message = ACCOUNT_CREATED };
-}
 
     public async Task<ResponseDto> Login(LoginDto loginDto)
-{
-    User? userExist = await _dbContext.Users.FirstOrDefaultAsync(u => u.email == loginDto.Email);
-
-    if (userExist == null)
     {
-        return new ResponseDto { Status = false, Message = "This account doesn't exist" };
+        User? userExist = await _dbContext.Users.FirstOrDefaultAsync(u => u.email == loginDto.Email);
+
+        if (userExist == null)
+        {
+            return new ResponseDto { Status = false, Message = "This account doesn't exist" };
+        }
+        if (userExist.password_hash != loginDto.Password)
+        {
+            return new ResponseDto { Status = false, Message = "Your email or password is incorrect" };
+        }
+
+        // Generate JWT Token
+
+
+        return new ResponseDto
+        {
+            Id = userExist.id,
+            Status = true,
+            Message = "You logged in successfully",
+        };
     }
-    if (userExist.password_hash != loginDto.Password)
+    public async Task<ResponseDto> getUserById(int userId)
     {
-        return new ResponseDto { Status = false, Message = "Your email or password is incorrect" };
+        User? userExist = await _dbContext.Users.FindAsync(userId);
+        if (userExist == null){
+            return new ResponseDto{ Status = false, Message = "This user Dont exist"};
+        }
+        return new ResponseDto {Status = true, Message = "The user is found", userName = userExist.name};
+
+
+
     }
 
-    // Generate JWT Token
-    
 
-    return new ResponseDto
-    {
-        Id = userExist.id,
-        Status = true,
-        Message = "You logged in successfully",
-    };
- }
-
-    
 }
 
 

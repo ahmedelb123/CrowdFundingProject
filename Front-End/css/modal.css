@@ -1,62 +1,71 @@
 html {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 /* Ensure Bootstrap styles are used for modal */
 .modal {
-    background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Custom Modal Styling */
 .modal-header {
-    border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
 }
 
 .btn-primary {
-    border: none;
+  border: none;
 }
 
 .modal-header h5 {
-    font-size: 32px;
-    font-weight: 600;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 label {
-    display: block;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 28px;
-    margin-left: 25px;
+  display: block;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-left: 25px;
+}
+#campaignType {
+  width: 95%;
+  padding: 10px;
+  margin: 5px 0 15px 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 /* Ensure input fields and buttons look good */
-input, textarea {
-    width: 95% !important;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-left: 25px;
+input,
+textarea {
+  width: 95% !important;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-left: 25px;
 }
 
-input:focus, textarea:focus {
-    border-color: #6444D8 !important;
-    box-shadow: 0 0 5px rgba(100, 68, 216, 0.5) !important;
+input:focus,
+textarea:focus {
+  border-color: #6444d8 !important;
+  box-shadow: 0 0 5px rgba(100, 68, 216, 0.5) !important;
 }
 
 /* Launch Button */
 #submit {
-    background-color: #8b5cf6;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
+  background-color: #8b5cf6;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 #submit:hover {
-    background-color: #6d44e5;
+  background-color: #6d44e5;
 }

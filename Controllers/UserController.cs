@@ -63,6 +63,22 @@ public class UserController : ControllerBase
       id = result.Id,
     });
   }
+  [HttpGet("getUser/{id}")]
+    public async Task<IActionResult> GetUserById(int id)
+    {
+        try
+        {
+            var result = await _userService.getUserById(id);
+            if (!result.Status)
+                return NotFound(new { message = "Post not found!" });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while retrieving the post.", error = ex.Message });
+        }
+    }
 
 
   

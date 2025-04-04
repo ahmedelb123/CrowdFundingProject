@@ -21,6 +21,33 @@ function initializeEventListeners() {
   // Add event listener for page size dropdown change
   const pageSizeDropdown = document.getElementById("pageSizeDropdown");
   pageSizeDropdown.addEventListener("change", handlePageSizeChange);
+  document.getElementById('fundraising-type').addEventListener('change', filterCampaignsByType);
+}
+// function to filter campaigns by type
+async function filterCampaignsByType() {
+  const type = document.getElementById('fundraising-type').value;
+  const pageSize = getPageSize();
+  
+  if (type === 'All') {
+    fetchCampaignsPaginated(1, pageSize);
+  } else {
+    fetchCampaignsByType(type, 1, pageSize);
+  }
+}
+
+// function to fetch campaigns by type
+async function fetchCampaignsByType(type, page, pageSize) {
+  try {
+    const response = await fetch(
+      `http://localhost:5228/api/post/getPostsByType/${type}?page=${page}&pageSize=${pageSize}`
+    );
+    if (!response.ok) return;
+    const data = await response.json();
+    displayCampaigns(data.items);
+    generatePagination(data.totalPages, page, pageSize);
+  } catch (err) {
+    console.error("Error fetching campaigns by type:", err);
+  }
 }
 
 // Handles the campaign submission (creating a new campaign)
@@ -51,10 +78,19 @@ async function buildCampaignRequest() {
   const targetAmount = parseFloat(
     document.getElementById("campaignTarget").value.trim()
   );
+  const type = document.getElementById("campaignType").value;
   const file = document.getElementById("campaignImage").files[0];
   const mediaUrl = file ? await readFileAsBase64(file) : null;
+  const userId = localStorage.getItem("Id");
 
-  return { userId: 0, title, content, targetAmount, mediaUrl };
+  return {
+    userId,
+    title,
+    content,
+    targetAmount,
+    mediaUrl,
+    type, // Add the type to the request
+  };
 }
 
 // Handles the response after submitting a campaign
