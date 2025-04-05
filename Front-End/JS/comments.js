@@ -1,94 +1,94 @@
+// commentScript.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const submitCommentBtn = document.getElementById("submitCommentButton");
   const newCommentText = document.getElementById("newCommentText");
   const addCommentSection = document.getElementById("addCommentSection");
+  const commentFeedback = document.getElementById("commentFeedback");
 
-  // Check if user is logged in
-  const isLoggedIn = localStorage.getItem("Id");
-  if (!isLoggedIn) {
+  // If not logged in, hide comment section
+  if (!localStorage.getItem("Id")) {
     addCommentSection.style.display = "none";
   }
 
+  // Handle comment submission
   submitCommentBtn.addEventListener("click", async () => {
-    const postId = window.currentCampaignId;
+    commentFeedback.style.display = "none";
+    commentFeedback.innerHTML = "";
+
+    const postId = window.currentCampaignId; 
     const commentText = newCommentText.value.trim();
 
     if (!commentText) {
-      alert("Please enter some comment text!");
+      commentFeedback.innerHTML = `<p style="color:red;">Please enter some comment text!</p>`;
+      commentFeedback.style.display = "block";
       return;
     }
 
     try {
-      const userId = localStorage.getItem("Id");
+      const userId = parseInt(localStorage.getItem("Id") || "0");
       if (!userId) {
-        alert("You must be logged in to comment!");
+        commentFeedback.innerHTML = `<p style="color:red;">You must be logged in to comment!</p>`;
+        commentFeedback.style.display = "block";
         return;
       }
 
       const requestBody = {
         postId: parseInt(postId),
-        userId: parseInt(userId),
-        commentText: commentText, // This must match the backend DTO
+        userId: userId,
+        commentText: commentText,
       };
-      console.log(userId);
-      console.log(postId);
 
-      const response = await fetch(
-        "http://localhost:5228/api/comment/addComment",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      const response = await fetch("http://localhost:5228/api/comment/addComment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
 
-      const data = await response.json();
-      console.log(data.status);
-      if (data.status) {
+      if (response.ok) {
         newCommentText.value = "";
         loadCommentsForCampaign(postId);
+        commentFeedback.innerHTML = `<p style="color:green;">Comment added successfully!</p>`;
       } else {
-        const errorData = await response.json();
-        console.error("Backend error:", errorData);
-        alert(errorData.message || "Failed to add comment");
-        return;
+        const data = await response.json();
+        commentFeedback.innerHTML = `<p style="color:red;">${data.message || "Failed to add comment"}</p>`;
       }
+      commentFeedback.style.display = "block";
     } catch (err) {
       console.error("Add comment error:", err);
-      alert("Error adding comment: " + err.message);
+      commentFeedback.innerHTML = `<p style="color:red;">Error adding comment: ${err.message}</p>`;
+      commentFeedback.style.display = "block";
     }
   });
 });
 
-
-// Load comments function remains the same
+/** Loads comments for the given post/campaign */
 async function loadCommentsForCampaign(postId) {
+  const commentFeedback = document.getElementById("commentFeedback");
   try {
-    const response1 = await fetch(
-      `http://localhost:5228/api/comment/post/${postId}`
-    );
-
-    const comments = await response1.json();
-    const userId = localStorage.getItem("Id")
-    const response2 = await fetch(
-      `http://localhost:5228/api/user/getUser/${userId}`
-    );
-    if (!response1.ok || !response2.ok) return;
-
-    const user = await response2.json();
-
-    const commentsList = document.getElementById("commentsList");
-    commentsList.innerHTML = "";
-
-    comments.forEach((comment) => {
-      const commentDiv = document.createElement("div");
-      commentDiv.classList.add("single-comment");
-      commentDiv.innerHTML = `
-              <p><strong>${user.userName}:</strong> ${comment.text}</p>
-          `;
-      commentsList.appendChild(commentDiv);
-    });
+    const response = await fetch(`http://localhost:5228/api/comment/post/${postId}`);
+    if (!response.ok) {
+      commentFeedback.innerHTML = `<p style="color:red;">Error loading comments.</p>`;
+      commentFeedback.style.display = "block";
+      return;
+    }
+    const comments = await response.json();
+    displayComments(comments);
   } catch (err) {
     console.error("loadCommentsForCampaign error:", err);
+    commentFeedback.innerHTML = `<p style="color:red;">Error loading comments: ${err.message}</p>`;
+    commentFeedback.style.display = "block";
   }
+}
+
+/** Displays the list of comments */
+function displayComments(comments) {
+  const commentsList = document.getElementById("commentsList");
+  commentsList.innerHTML = "";
+  comments.forEach((comment) => {
+    const commentDiv = document.createElement("div");
+    commentDiv.classList.add("single-comment");
+    commentDiv.innerHTML = `<p><strong>User #${comment.userId}:</strong> ${comment.text}</p>`;
+    commentsList.appendChild(commentDiv);
+  });
 }
