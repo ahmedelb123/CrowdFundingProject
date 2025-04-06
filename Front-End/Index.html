@@ -172,7 +172,7 @@
         />
         <div class="container">
           <div class="carousel-caption text-end">
-            <h1 class="text-drop-shadow">Realize Your Ambitions</h1>
+            <h1 class="text-drop-shadow">Fuel Your Ambitions</h1>
             <p class="text-drop-shadow">
               Transform your ideas into reality with the support of our
               community.
@@ -247,17 +247,18 @@
         <div class="col-md-4">
           <div class="service-card h-100 p-4">
             <div class="icon-wrapper mb-4">
-              <span class="service-icon" style="font-size: 2rem;">📊</span>
+              <span class="service-icon" style="font-size: 2rem;">💰</span>
             </div>
             <h4 class="service-title text-center mb-3">
-              Analytics &amp; Insights
+               Donors
             </h4>
             <p class="service-text text-center mb-0">
-              Monitor campaign performance and gain actionable insights to
-              optimize your project’s success.
+              ensuring clear updates,secure transactions, 
+              and engagement throughout the campaign lifecycle.
             </p>
           </div>
         </div>
+        
       </div>
     </div>
   </section>
@@ -269,7 +270,8 @@
       <div class="row align-items-center justify-content-center py-5">
         <!-- Text Content -->
         <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
-          <h1 class="fw-bold mb-4">Empower Your Vision with Fundify</h1>
+          <h1 class="fw-bold mb-4">Realize Your Vision with Fundify
+          </h1>
           <p class="lead">
             Join Fundify and bring your ideas to life. Our platform connects
             creators with investors to fuel innovation and change.
@@ -564,14 +566,18 @@
             alt="Campaign Image"
           />
           <p id="detailModalDescription"></p>
-          <p>
-            <strong>Target Amount:</strong>
-            $<span id="detailModalTarget"></span>
-            <br />
-            <strong>Raised:</strong>
-            $<span id="detailModalRaised"></span>
-          </p>
-          <button id="donateButton" class="btn btn-success">Donate Now!</button>
+          <div class="campaign-stats-container">
+            <div class="campaign-stat-box">
+              <strong>Target Amount</strong>
+              <p id="detailModalTargetAmount">$<span id="detailModalTarget"></span></p>
+            </div>
+            <div class="campaign-stat-box">
+              <strong>Raised</strong>
+              <p id="detailModalRaisedAmount">$<span id="detailModalRaised"></span></p>
+            </div>
+          </div>
+          
+          <button id="donateButton" class="btn btn-success btn-pulse">Donate Now!</button>
 
           <div class="comments-section mt-4">
             <h5>Comments</h5>
@@ -587,9 +593,12 @@
                 Submit Comment
               </button>
               <div
-                id="commentFeedback"
-                style="display:none; color:red;"
-              ></div>
+              id="commentFeedback"
+              class="alert alert-light mt-3"
+              role="alert"
+              style="display: none;"
+            >
+            </div>
             </div>
           </div>
         </div>
@@ -601,69 +610,101 @@
   <div id="donationModal" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
+        <!-- Modal Header -->
         <div class="modal-header">
           <h5 class="modal-title">Donate to Campaign</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+  
+        <!-- Modal Body -->
         <div class="modal-body">
-          <label>Donation Amount</label>
-          <input
-            type="number"
-            id="donationAmount"
-            class="form-control"
-            min="1"
-            placeholder="Enter amount"
-            required
-          />
-          <label class="mt-3">Cardholder Name</label>
-          <input
-            type="text"
-            id="holderName"
-            class="form-control"
-            placeholder="Name on card"
-            required
-          />
-          <label class="mt-3">Card Number</label>
-          <input
-            type="number"
-            id="cardNumber"
-            class="form-control"
-            placeholder="1234 5678 9012 3456"
-            required
-          />
-          <div class="row mt-3">
+          
+          <!-- Donation Amount -->
+          <div class="form-group">
+            <label for="donationAmount">Donation Amount</label>
+            <input
+              type="number"
+              id="donationAmount"
+              class="form-control"
+              min="1"
+              placeholder="Enter amount"
+              required
+            />
+          </div>
+  
+          <!-- Cardholder Name -->
+          <div class="form-group">
+            <label for="holderName">Cardholder Name</label>
+            <input
+              type="text"
+              id="holderName"
+              class="form-control"
+              placeholder="Name on card"
+              required
+            />
+          </div>
+  
+          <!-- Card Number -->
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input
+              type="number"
+              id="cardNumber"
+              class="form-control"
+              placeholder="1234 5678 9012 3456"
+              required
+            />
+          </div>
+  
+          <!-- Row for Expiry + CVV -->
+          <div class="row">
             <div class="col-md-6">
-              <label>Expiry Date</label>
-              <input
-                type="text"
-                id="expiryDate"
-                class="form-control"
-                placeholder="MM/YY"
-                required
-              />
+              <div class="form-group">
+                <label for="expiryDate">Expiry Date</label>
+                <input
+                  type="text"
+                  id="expiryDate"
+                  class="form-control"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
             </div>
             <div class="col-md-6">
-              <label>CVV</label>
-              <input
-                type="number"
-                id="secretNumber"
-                class="form-control"
-                placeholder="123"
-                required
-              />
+              <div class="form-group">
+                <label for="secretNumber">CVV</label>
+                <input
+                  type="number"
+                  id="secretNumber"
+                  class="form-control"
+                  placeholder="123"
+                  required
+                />
+              </div>
             </div>
           </div>
+  
+          <!-- Confirm Donation Button -->
           <button
             id="confirmDonateButton"
-            class="btn btn-success mt-3 w-50 mx-auto d-block"
+            class="btn mt-3"
           >
             Confirm Donation
           </button>
-          <div id="donationFeedback" style="display:none;"></div>
+  
+          <!-- Donation Feedback (hidden by default) -->
+          <div
+          id="donationFeedback"
+          class="alert alert-light mt-3"
+          role="alert"
+          style="display: none;"
+        >
+        </div>
         </div>
       </div>
     </div>
   </div>
+  
   <!--========================= END DONATION MODAL =========================-->
 
   <!--========================= FOOTER =========================-->

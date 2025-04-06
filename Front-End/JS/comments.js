@@ -1,4 +1,3 @@
-// commentScript.js
 
 document.addEventListener("DOMContentLoaded", () => {
   const submitCommentBtn = document.getElementById("submitCommentButton");
@@ -13,15 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle comment submission
   submitCommentBtn.addEventListener("click", async () => {
+    // Reset feedback
     commentFeedback.style.display = "none";
     commentFeedback.innerHTML = "";
 
-    const postId = window.currentCampaignId; 
+    const postId = window.currentCampaignId;
     const commentText = newCommentText.value.trim();
 
     if (!commentText) {
       commentFeedback.innerHTML = `<p style="color:red;">Please enter some comment text!</p>`;
       commentFeedback.style.display = "block";
+      setTimeout(() => {
+        commentFeedback.style.display = "none";
+      }, 3000);
       return;
     }
 
@@ -30,6 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!userId) {
         commentFeedback.innerHTML = `<p style="color:red;">You must be logged in to comment!</p>`;
         commentFeedback.style.display = "block";
+        setTimeout(() => {
+          commentFeedback.style.display = "none";
+        }, 3000);
         return;
       }
 
@@ -53,11 +59,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
         commentFeedback.innerHTML = `<p style="color:red;">${data.message || "Failed to add comment"}</p>`;
       }
+
       commentFeedback.style.display = "block";
+      setTimeout(() => {
+        commentFeedback.style.display = "none";
+      }, 3000);
+
     } catch (err) {
       console.error("Add comment error:", err);
       commentFeedback.innerHTML = `<p style="color:red;">Error adding comment: ${err.message}</p>`;
       commentFeedback.style.display = "block";
+      setTimeout(() => {
+        commentFeedback.style.display = "none";
+      }, 3000);
     }
   });
 });
@@ -70,6 +84,9 @@ async function loadCommentsForCampaign(postId) {
     if (!response.ok) {
       commentFeedback.innerHTML = `<p style="color:red;">Error loading comments.</p>`;
       commentFeedback.style.display = "block";
+      setTimeout(() => {
+        commentFeedback.style.display = "none";
+      }, 3000);
       return;
     }
     const comments = await response.json();
@@ -78,6 +95,9 @@ async function loadCommentsForCampaign(postId) {
     console.error("loadCommentsForCampaign error:", err);
     commentFeedback.innerHTML = `<p style="color:red;">Error loading comments: ${err.message}</p>`;
     commentFeedback.style.display = "block";
+    setTimeout(() => {
+      commentFeedback.style.display = "none";
+    }, 3000);
   }
 }
 

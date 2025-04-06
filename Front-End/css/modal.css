@@ -1,3 +1,4 @@
+/* GLOBAL MODAL STYLES */
 html {
   overflow-x: hidden;
 }
@@ -6,62 +7,174 @@ html {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.modal-header {
-  border-radius: 5px 5px 0 0;
+.modal-content {
+  border-radius: 0 !important;
+  width: 100%;
 }
 
-.btn-primary {
-  border: none;
+/* DONATION MODAL */
+#donationModal .modal-body {
+  padding: 1.5rem !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.modal-header h5 {
-  font-size: 32px;
-  font-weight: 600;
+.form-group {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
 }
 
-label {
+.form-group label {
   display: block;
-  text-align: left;
   font-size: 20px;
   font-weight: 600;
-  margin-top: 28px;
-  margin-left: 25px;
-}
-#campaignType {
-  width: 95%;
-  padding: 10px;
-  margin: 5px 0 15px 25px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 8px;
+  text-align: left;
 }
 
-input,
-textarea {
-  width: 95% !important;
+.form-group input,
+.form-group textarea {
+  width: 100%;
   padding: 10px;
-  margin-top: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-left: 25px;
 }
 
-input:focus,
-textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   border-color: #6444d8 !important;
   box-shadow: 0 0 5px rgba(100, 68, 216, 0.5) !important;
 }
 
+#confirmDonateButton,
 #submit {
   background-color: #8b5cf6;
   color: white;
   font-weight: bold;
-  padding: 12px;
+  padding: 12px 24px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin: 1rem auto 0 auto;
+  display: block;
+  width: fit-content;
 }
 
+#confirmDonateButton:hover,
 #submit:hover {
   background-color: #6d44e5;
+}
+
+/* CAMPAIGN DETAIL MODAL */
+#campaignDetailModal .modal-body {
+  padding: 0 !important;
+  width: 100%;
+}
+
+#detailModalImage {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+#campaignDetailModal p {
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+#donateButton {
+  display: block;
+  margin: 1rem auto 1.5rem auto;
+}
+
+/* COMMENTS SECTION */
+.comments-section {
+  width: 100% !important;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.commentsList {
+  width: 100%;
+  max-height: 10rem;
+  overflow-y: auto;
+}
+
+#submitCommentButton {
+  background-color: #8b5cf6;
+  color: white;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin: 0.5rem 0 0 0;
+  display: inline-block;
+  width: auto;
+}
+
+#submitCommentButton:hover {
+  background-color: #6d44e5;
+}
+
+/* PULSE ANIMATION */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+.btn-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* CAMPAIGN STATS */
+.campaign-stats-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.campaign-stat-box {
+  flex: 1;
+  max-width: 200px;
+  background-color: #f9f9f9;
+  border: 1px solid #8b5cf6;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.campaign-stat-box strong {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  color: #8b5cf6;
+}
+
+.campaign-stat-box p {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1c1c1c;
+  display: inline-block; 
+  padding: 0.3rem 0.7rem; 
+  border-radius: 4px; 
 }
