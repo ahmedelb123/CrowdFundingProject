@@ -1,0 +1,6 @@
+/Users/macuser/CrowdFundingProject/CrowdFundingProject.Tests/obj/Debug/net7.0/CrowdFundingProject.Tests.csproj.AssemblyReference.cache
+/Users/macuser/CrowdFundingProject/CrowdFundingProject.Tests/obj/Debug/net7.0/CrowdFundingProject.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/macuser/CrowdFundingProject/CrowdFundingProject.Tests/obj/Debug/net7.0/CrowdFundingProject.Tests.AssemblyInfoInputs.cache
+/Users/macuser/CrowdFundingProject/CrowdFundingProject.Tests/obj/Debug/net7.0/CrowdFundingProject.Tests.AssemblyInfo.cs
+/Users/macuser/CrowdFundingProject/CrowdFundingProject.Tests/obj/Debug/net7.0/CrowdFundingProject.Tests.csproj.CoreCompileInputs.cache
+/Users/macuser/CrowdFundingProject/CrowdFundingProject.Tests/obj/Debug/net7.0/CrowdFundingProject.Tests.sourcelink.json
