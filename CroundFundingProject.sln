@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CroundFundingProject", "CroundFundingProject.csproj", "{79131483-2676-94A4-3F92-C22B49B06554}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrowdFundingProject.Tests", "CrowdFundingProject.Tests\CrowdFundingProject.Tests.csproj", "{8D22040A-D257-4ECF-92E6-7237D606A3ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{79131483-2676-94A4-3F92-C22B49B06554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79131483-2676-94A4-3F92-C22B49B06554}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79131483-2676-94A4-3F92-C22B49B06554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D22040A-D257-4ECF-92E6-7237D606A3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D22040A-D257-4ECF-92E6-7237D606A3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D22040A-D257-4ECF-92E6-7237D606A3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D22040A-D257-4ECF-92E6-7237D606A3ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
