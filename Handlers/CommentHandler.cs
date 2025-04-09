@@ -14,22 +14,22 @@ public class CommentHandler
     _dbContext = context;
   }
 
- public async Task<ResponseDto> addComment(int postId, int userId, string commentText)
+ public async Task<ResponseDto> addComment(CommentDto commentDto)
 {
-    bool userExists = await _dbContext.Users.AnyAsync(u => u.id == userId);
+    bool userExists = await _dbContext.Users.AnyAsync(u => u.id == commentDto.UserId);
     if (!userExists)
     {
         return new ResponseDto { Status = false, Message = USER_DONT_EXIST };
     }
 
-    bool postExists = await _dbContext.Posts.AnyAsync(p => p.Id == postId);
+    bool postExists = await _dbContext.Posts.AnyAsync(p => p.Id == commentDto.PostId);
     if (!postExists)
     {
         return new ResponseDto { Status = false, Message = "Post does not exist" };
     }
 
     // Create Comment
-    Comment newComment = new Comment(postId, userId, commentText);
+    Comment newComment = new Comment(commentDto.PostId, commentDto.UserId, commentDto.CommentText);
     _dbContext.Comments.Add(newComment);
     await _dbContext.SaveChangesAsync();
 

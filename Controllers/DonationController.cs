@@ -16,7 +16,6 @@ public class DonationController : ControllerBase
     }
 
     // Create a Donation
-    [Authorize]
     [HttpPost("create")]
     public async Task<IActionResult> CreateDonation([FromBody] CreateDonationDto request)
     {
@@ -27,9 +26,9 @@ public class DonationController : ControllerBase
                 return BadRequest(new { message = "Donation amount must be greater than zero." });
             }
 
-              // Get the authenticated user's ID from the JWT token
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var result = await _donationService.CreateDonation(request, userId);
+              
+            
+            var result = await _donationService.CreateDonation(request);
 
             if (!result.Status)
                 return BadRequest(result);
