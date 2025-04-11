@@ -1,0 +1,8 @@
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.csproj.AssemblyReference.cache
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.GeneratedMSBuildEditorConfig.editorconfig
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.AssemblyInfoInputs.cache
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.AssemblyInfo.cs
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.csproj.CoreCompileInputs.cache
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.MvcApplicationPartsAssemblyInfo.cs
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.MvcApplicationPartsAssemblyInfo.cache
+/Users/macuser/CrowdFundingProject/obj/Debug/net8.0/CroundFundingProject.sourcelink.json
