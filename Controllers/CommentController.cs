@@ -20,6 +20,7 @@ public class CommentController : ControllerBase
   {
     try
     {
+      // Add a comment to a post
       var result = await commentHandler.addComment(commentDto);
       
       if (!result.Status) 
@@ -44,8 +45,8 @@ public class CommentController : ControllerBase
   {
     try
     {
+      // we retrieve all the comments of a post
       var result = await commentHandler.GetAllCommentsOfPost(postId);
-
       return Ok(result);
     }
     catch (Exception ex)

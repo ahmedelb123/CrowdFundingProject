@@ -12,7 +12,7 @@ public class UserController : ControllerBase
   public UserController(AppDbContext context, UserHandler userService)
   {
     _context = context;
-    _userService = userService; // Inject UserHandler into the constructor
+    _userService = userService; 
   }
 
   [HttpPost("createAccount")]
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
   {
     var result = await _userService.Login(request);
 
-    if (!result.Status)  // Use `Status` instead of `status`
+    if (!result.Status) 
     {
       return BadRequest(result);
     }

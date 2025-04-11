@@ -22,7 +22,9 @@ public class DonationController : ControllerBase
         try
         {
             if (request.Amount <= 0)
+
             {
+                // Donation is a negative number
                 return BadRequest(new { message = "Donation amount must be greater than zero." });
             }
 
@@ -32,6 +34,8 @@ public class DonationController : ControllerBase
 
             if (!result.Status)
                 return BadRequest(result);
+            
+            // Doantion is successefully made
 
             return Ok(new
             {

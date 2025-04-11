@@ -17,9 +17,9 @@ public class PostHandler
     {
         try
         {
-
+            
             var newPost = new Post(postDto.UserId, postDto.Title, postDto.Content, postDto.MediaUrl ?? "", 0, postDto.TargetAmount, postDto.Type);
-
+            // Add the post and save it in dataBase
             _dbContext.Posts.Add(newPost);
             await _dbContext.SaveChangesAsync();
 

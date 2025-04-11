@@ -17,12 +17,14 @@ public class CommentHandler
  public async Task<ResponseDto> addComment(CommentDto commentDto)
 {
     bool userExists = await _dbContext.Users.AnyAsync(u => u.id == commentDto.UserId);
+    // the user dont exist
     if (!userExists)
     {
         return new ResponseDto { Status = false, Message = USER_DONT_EXIST };
     }
 
     bool postExists = await _dbContext.Posts.AnyAsync(p => p.Id == commentDto.PostId);
+    // the post dont exist
     if (!postExists)
     {
         return new ResponseDto { Status = false, Message = "Post does not exist" };
